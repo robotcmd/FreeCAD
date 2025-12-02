@@ -1552,6 +1552,15 @@ endif()
 
 SET_BIN_DIR(FreeCADGui FreeCADGui)
 
+# Ensure GUI resource data targets are built before FreeCADGui
+# This fixes issues where icons and stylesheets are missing at runtime
+# when building specific targets (e.g., in Xcode)
+add_dependencies(FreeCADGui
+    Stylesheets_data
+    PreferencePacks_data
+    PreferencePackTemplates_data
+)
+
 if(WIN32)
     INSTALL(TARGETS FreeCADGui
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

@@ -71,6 +71,11 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cMake")
 CompilerChecksAndSetups()
 ConfigureCMakeVariables()
 InitializeFreeCADBuildOptions()
+
+# Setup Homebrew on macOS - must be called after InitializeFreeCADBuildOptions
+# (which sets BUILD_GUI) but before any find_package() calls
+SetupHomebrew()
+
 CheckInterModuleDependencies()
 FreeCADLibpackChecks()
 SetupDoxygen()

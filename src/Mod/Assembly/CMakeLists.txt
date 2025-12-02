@@ -72,12 +72,15 @@ ADD_CUSTOM_TARGET(AssemblyScripts ALL
 
 SET(test_files
     ${Assembly_Scripts}
-    ${AssemblyTests_SRCS}
 )
 
 ADD_CUSTOM_TARGET(AssemblyTests ALL
-    SOURCES ${test_files}
+    SOURCES ${test_files} ${AssemblyTests_SRCS}
 )
+
+# Make AssemblyTests depend on AssemblyScripts to avoid duplicate custom command issues
+# with Xcode's new build system
+add_dependencies(AssemblyTests AssemblyScripts)
 
 fc_copy_sources(AssemblyScripts "${CMAKE_BINARY_DIR}/Mod/Assembly" ${all_files})
 fc_copy_sources(AssemblyTests "${CMAKE_BINARY_DIR}/Mod/Assembly" ${test_files})
